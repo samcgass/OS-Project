@@ -1,13 +1,14 @@
-/*  Sam Gass, Henry Paek, Haden Stuart
+/*  Sam Gass, Henry Paek, Haden Stuart, Haoqian Li
     Operating Systems
     2/8/2020
     Project Part 1 - File System Driver */
 
 #include <stdio.h>
+#define ERR_BAD_ADDRESS -999
 
 // String for the name of the memory file to be created/modified
 char memoryFile[] = "simulated_memory.bin";
-
+static FILE* driverFile = NULL;
 /*  An unsigned short is 2 bytes (a word) so 32000 ushorts is 64KB,
     the size of a sector. Now we can use sizeof(sector) to get 64KB.
     Its initalized to all zeros but the Erase methods make every bit a 1.   */
@@ -67,20 +68,64 @@ void EraseSector(int nSectorNr)
     fclose(memoryPtr);
 }
 
-void readWord(int nAddress)
+int readWord(int nAddress)
 {
-    return;
+    if (nAddress % 2 != 0) {
+		return ERR_BAD_ADDRESS;
+	}
+    // Check if the file is over the boundary.
+    if (nAddress >= 0 && nAddress < 32000) {
+        // Check if the seek word is success.
+        if(fseek(driverFile,nAddress,SEEK_SET) != 0) {
+            return -1;
+        }
+        int res = 0;
+        // Get the word out.
+        int flag = fread(&res, sizeof(res),1,driverFile);
+        if (flag < 1) {
+            return -1;
+        }
+        return res;
+    }
 }
 
-void writeWord(int nAddress, unsigned short nWord)
+int writeWord(int nAddress, unsigned short nWord)
 {
-    return;
+    if (nAddress % 2 != 0) {
+		return ERR_BAD_ADDRESS;
+	}
+    if (fseek(driverFile, nAddress, SEEK_SET) != 0) {
+		return -1;
+	}
+    int oldValue = readWord(nAddress);
+    // nWord AND ReadWord
+    int newValue = oldValue & nWord;
+    int flag = fwrite(&newValue, sizeof(newValue), 1, driverFile);
+	if (flag < 1) {
+		return -1;
+	}
+	return 1;
+}
+
+int createDriverFile(char* fileName) {
+    FILE* filePtr = fopen(fileName, "w+b");
+    if (filePtr == NULL) {
+        printf("Could not open driver file.\n");
+        return -1;
+    }
+
+    driverFile = filePtr;
+    return 1;
 }
 
 int main(void)
 {
+    createDriverFile(memoryFile);   
     //EraseAllSectors();
     //EraseSector(19);
-    printf("done");
+    writeWord(200, 3);
+    int res = readWord(200);
+    printf("The ans is %d.\n",res);
+    printf("done.\n");
     return 0;
-}
+};
