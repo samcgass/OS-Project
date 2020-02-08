@@ -18,10 +18,10 @@ unsigned short sector[32000];
     If the file does exist, it replaces it with a file of all 1's   */
 void EraseAllSectors()
 {
-    //  sets all bits in the sector array to 1. 0xFF is the max value of an ushort.
+    //  sets all bits in the sector array to 1. 0xFFFF is the max value of an ushort.
     for (int i = 0; i < 32000; i++)
     {
-        sector[i] = 0xFF;
+        sector[i] = 0xFFFF;
     }
 
     //  opens or creates the file with name memoryFile in the mode for writing bits.
@@ -49,9 +49,10 @@ void EraseSector(nSectorNr)
     if (memoryPtr == NULL)
     {
         EraseAllSectors();
+        return;
     }
 
-    //  sets all bits in the sector array to 1. 0xFF is the max value of an ushort.
+    //  sets all bits in the sector array to 1. 0xFFFF is the max value of an ushort.
     for (int i = 0; i < 32000; i++)
     {
         sector[i] = 0xFFFF;
