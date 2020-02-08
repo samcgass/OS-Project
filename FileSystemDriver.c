@@ -41,7 +41,7 @@ void EraseAllSectors()
 
 /*  If the file with name memoryFile does not exist, calls EraseAllSectors() to create a file.
     If the file does exist, it replaces all bits at sector nSectorNr  with 1's   */
-void EraseSector(nSectorNr)
+void EraseSector(int nSectorNr)
 {
     // opens the file at memoryFile for reading and writing bits.
     FILE *memoryPtr = fopen(memoryFile, "rb+");
@@ -67,12 +67,12 @@ void EraseSector(nSectorNr)
     fclose(memoryPtr);
 }
 
-void readWord(nAddress)
+void readWord(int nAddress)
 {
     return;
 }
 
-void writeWord(nAddress, nWord)
+void writeWord(int nAddress, unsigned short nWord)
 {
     return;
 }
