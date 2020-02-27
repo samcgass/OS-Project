@@ -16,3 +16,8 @@ In first project, following “driver” operations (functions) should be implem
 * EraseAllSectors ()
 * ReadWord (int nAddress)
 * WriteWord (int nAddress, nWord)
+
+### Part 2
+
+In this part you have to design data structures that you will use in the third part of the project.
+
