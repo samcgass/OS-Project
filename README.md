@@ -21,3 +21,6 @@ In first project, following “driver” operations (functions) should be implem
 
 In this part you have to design data structures that you will use in the third part of the project.
 
+* Which fields it has (Name and Meaning)
+* Size of the fields
+* Reasons why you have chosen these fields (e.g., how they will be used and why)
