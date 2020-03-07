@@ -4,7 +4,7 @@
 
 **COMP 3500:** Intro To Operating Systems | Spring 2020
 
-**Authors:** Sam Gass, Henry Paek, Haden Stuart, Haoqian Li
+**Authors:** Sam Gass, Henry Paek, Haden Stuart, Haoqian Li, Edward Ojo, Marvin Bell
 
 ## Project: File System
 
